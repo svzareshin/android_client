@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +18,6 @@
         <activity android:name=".LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,6 +39,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.mkai.pry.SubscriptionActivity" />
         </activity>
+        <activity
+            android:name=".faceDetect"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
+    <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="face"/>
 </manifest>
