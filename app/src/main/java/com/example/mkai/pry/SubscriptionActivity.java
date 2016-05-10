@@ -99,7 +99,7 @@ public class SubscriptionActivity extends AppCompatActivity {
                 Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 Time time = new Time();
                 time.setToNow();
-                File checkDir = new File(Environment.getExternalStorageDirectory() + "/pry/Images");
+                File checkDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/pry/Images");
 
                 if(checkDir.exists()) {
                     Log.v(LOG_TAG, "directory exist");
@@ -108,7 +108,7 @@ public class SubscriptionActivity extends AppCompatActivity {
                     checkDir.mkdirs();
                     Log.v(LOG_TAG, "directory create");
                 }
-                File file = new File(Environment.getExternalStorageDirectory()+"/pry/Images", Integer.toString(time.year) + Integer.toString(time.month) + Integer.toString(time.monthDay) + Integer.toString(time.hour) + Integer.toString(time.minute) + Integer.toString(time.second) + ".jpg");
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)+"/pry/Images", Integer.toString(time.year) + Integer.toString(time.month) + Integer.toString(time.monthDay) + Integer.toString(time.hour) + Integer.toString(time.minute) + Integer.toString(time.second) + ".jpg");
                 mOutputFileUri = Uri.fromFile(file);
                 camIntent.putExtra(MediaStore.EXTRA_OUTPUT, mOutputFileUri);
                 startActivityForResult(camIntent, CAM_REQUEST);
