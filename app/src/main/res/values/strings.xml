@@ -2,6 +2,8 @@
     <string name="app_name">Pry</string>
     <string name="title_activity_subscription">Подписки</string>
     <string name="title_activity_result">Результаты поиска</string>
+    <string name="title_activity_settings">Настройки</string>
+
 
     <!-- Strings related to login -->
     <string name="prompt_password">Пароль</string>
@@ -15,6 +17,12 @@
         completions."
     </string>
     <!-- menu item -->
+    <string name="action_gallery">Загрузить фото из галереи</string>
     <string name="action_settings">Настройки</string>
     <string name="action_logout">Выйти из учетной записи</string>
+    <string-array name="encrypts">
+        <item>AES</item>
+        <item>RSA</item>
+        <item>ГОСТ</item>
+    </string-array>
 </resources>

@@ -43,8 +43,8 @@ public class SubscriptionActivity extends AppCompatActivity {
         subsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Log.d(LOG_TAG, subsListView.getItemAtPosition(position).toString() + " itemClick: position = " + position + ", id = "
-                        + id);
+//                Log.d(LOG_TAG, subsListView.getItemAtPosition(position).toString() + " itemClick: position = " + position + ", id = "
+//                        + id);
                 Intent intent = new Intent(SubscriptionActivity.this, ResultActivity.class);
                 startActivity(intent);
             }
@@ -75,9 +75,21 @@ public class SubscriptionActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+//        int id = item.getItemId();
+//        if (id == R.id.action_settings) {
+//            System.out.println("XOXOX-XO");
+//
+//            return true;
+//        }
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intentSettings = new Intent(SubscriptionActivity.this, SettingsActivity.class);
+                startActivity(intentSettings);
+                break;
+            case R.id.action_logout:
+                break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -92,6 +104,20 @@ public class SubscriptionActivity extends AppCompatActivity {
         }
         return mDataSet;
     }
+
+//    public void onClickMenu(MenuItem item) {
+//        System.out.println("ololol");
+//        switch (item.getItemId()) {
+//            case R.id.action_settings:
+//                Intent intentSettings = new Intent(SubscriptionActivity.this, SettingsActivity.class);
+//                startActivity(intentSettings);
+//                break;
+//            case R.id.action_logout:
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
     public void onClick(View v) {
         switch (v.getId()) {

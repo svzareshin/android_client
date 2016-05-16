@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="Социальная сеть"
+        android:textAppearance="?android:attr/textAppearanceLarge">
+    </TextView>
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Вконтакте"
+            android:id="@+id/radioButton2"
+            android:layout_margin="5dp"
+            android:layout_gravity="left"
+            android:textSize="16dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facebook"
+            android:id="@+id/radioButton"
+            android:layout_margin="5dp"
+            android:layout_gravity="left"
+            android:textSize="16dp" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Сохранить"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp">
+        </Button>
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Отмена"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+        </Button>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="Информация"
+        android:textAppearance="?android:attr/textAppearanceLarge">
+    </TextView>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Фамилия, Имя"
+            android:layout_margin="7dp"
+            android:id="@+id/switchName"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Фотография"
+            android:layout_margin="7dp"
+            android:id="@+id/switchPhoto"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Город"
+            android:layout_margin="7dp"
+            android:id="@+id/switchCity"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Дата рождения"
+            android:layout_margin="7dp"
+            android:id="@+id/switchBirthday"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Место работы"
+            android:layout_margin="7dp"
+            android:id="@+id/switchWork"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Телефон"
+            android:layout_margin="7dp"
+            android:id="@+id/switchPhone"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Сохранить"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp">
+        </Button>
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Отмена"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+        </Button>
+
+    </LinearLayout>
+</LinearLayout>
