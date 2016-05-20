@@ -27,17 +27,17 @@ public class AlertEncrypt extends DialogFragment implements OnClickListener{
     }
 
     public void onClick(View v) {
-        Log.d(LOG_TAG, "Dialog 1: " + ((Button) v).getText());
+        Log.d(LOG_TAG, "Dialog Encrypt: " + ((Button) v).getText());
         dismiss();
     }
 
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        Log.d(LOG_TAG, "Dialog 1: onDismiss");
+        Log.d(LOG_TAG, "Dialog Encrypt: onDismiss");
     }
 
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-        Log.d(LOG_TAG, "Dialog 1: onCancel");
+        Log.d(LOG_TAG, "Dialog Encrypt: onCancel");
     }
 }
