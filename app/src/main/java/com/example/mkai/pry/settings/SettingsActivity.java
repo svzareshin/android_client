@@ -1,8 +1,5 @@
-package com.example.mkai.pry;
+package com.example.mkai.pry.settings;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
+
+import com.example.mkai.pry.R;
+import com.example.mkai.pry.settings.AlertEncrypt;
+import com.example.mkai.pry.settings.AlertInfo;
 
 public class SettingsActivity extends AppCompatActivity {
     final String LOG_TAG = "myLogs";
@@ -45,12 +45,8 @@ public class SettingsActivity extends AppCompatActivity {
                         dialog0.show(getFragmentManager(), "dialog0");
                         break;
                     case 1:
-                        AlertSocial dialog1 = new AlertSocial();
+                        AlertInfo dialog1 = new AlertInfo();
                         dialog1.show(getFragmentManager(), "dialog1");
-                        break;
-                    case 2:
-                        AlertInfo dialog3 = new AlertInfo();
-                        dialog3.show(getFragmentManager(), "dialog2");
                     default:
                         break;
                 }
@@ -77,11 +73,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     private String[] getDataSet() {
 
-        String[] mDataSet = new String[4];
+        String[] mDataSet = new String[3];
+//        mDataSet[0] = "Тип шифрования";
+//        mDataSet[1] = "Социальная сеть";
+//        mDataSet[2] = "Информация";
+//        mDataSet[3] = "Настройка запроса";
         mDataSet[0] = "Тип шифрования";
-        mDataSet[1] = "Социальная сеть";
-        mDataSet[2] = "Информация";
-        mDataSet[3] = "Настройка запроса";
+        mDataSet[1] = "Информация";
+        mDataSet[2] = "Настройка запроса";
         return mDataSet;
     }
 

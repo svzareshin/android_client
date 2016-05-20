@@ -1,5 +1,4 @@
-package com.example.mkai.pry;
-
+package com.example.mkai.pry.settings;
 
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -10,16 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class AlertInfo extends DialogFragment implements View.OnClickListener {
+import com.example.mkai.pry.R;
+
+public class AlertSocial extends DialogFragment implements View.OnClickListener {
 
     final String LOG_TAG = "myLogs";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getDialog().setTitle("Title!");
-        View v = inflater.inflate(R.layout.alert_info, null);
-        v.findViewById(R.id.btnYes).setOnClickListener(AlertInfo.this);
-        v.findViewById(R.id.btnNo).setOnClickListener(AlertInfo.this);
+        View v = inflater.inflate(R.layout.alert_social, null);
+        v.findViewById(R.id.btnYes).setOnClickListener(AlertSocial.this);
+        v.findViewById(R.id.btnNo).setOnClickListener(AlertSocial.this);
         return v;
     }
 

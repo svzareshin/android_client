@@ -1,4 +1,4 @@
-package com.example.mkai.pry;
+package com.example.mkai.pry.result;
 
 
 import android.graphics.drawable.Drawable;

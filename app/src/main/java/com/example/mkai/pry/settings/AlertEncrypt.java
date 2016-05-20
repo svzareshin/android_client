@@ -1,4 +1,4 @@
-package com.example.mkai.pry;
+package com.example.mkai.pry.settings;
 
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.mkai.pry.R;
 
 
 public class AlertEncrypt extends DialogFragment implements OnClickListener{

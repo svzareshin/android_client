@@ -1,14 +1,14 @@
-package com.example.mkai.pry;
+package com.example.mkai.pry.result;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.mkai.pry.R;
 
 import java.io.File;
 import java.util.List;

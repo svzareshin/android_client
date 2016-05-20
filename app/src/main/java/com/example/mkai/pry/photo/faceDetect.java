@@ -1,4 +1,4 @@
-package com.example.mkai.pry;
+package com.example.mkai.pry.photo;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.example.mkai.pry.R;
 
 import java.io.IOException;
 

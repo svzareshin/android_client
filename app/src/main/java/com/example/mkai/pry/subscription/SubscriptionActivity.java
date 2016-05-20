@@ -1,4 +1,4 @@
-package com.example.mkai.pry;
+package com.example.mkai.pry.subscription;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +17,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.example.mkai.pry.R;
+import com.example.mkai.pry.photo.faceDetect;
+import com.example.mkai.pry.result.ResultActivity;
+import com.example.mkai.pry.settings.SettingsActivity;
 
 import java.io.File;
 

@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.example.mkai.pry.subscription.SubscriptionActivity;
+
 public class LogInActivity extends Activity implements OnClickListener {
     Button btn_login;
 

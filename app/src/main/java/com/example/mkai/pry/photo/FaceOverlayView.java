@@ -1,4 +1,4 @@
-package com.example.mkai.pry;
+package com.example.mkai.pry.photo;
 
 import android.content.Context;
 import android.graphics.Bitmap;

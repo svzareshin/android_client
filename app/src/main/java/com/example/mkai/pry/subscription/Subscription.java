@@ -1,4 +1,4 @@
-package com.example.mkai.pry;
+package com.example.mkai.pry.subscription;
 
 import java.util.ArrayList;
 import java.util.List;

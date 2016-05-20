@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SubscriptionActivity"
+            android:name=".subscription.SubscriptionActivity"
             android:label="@string/title_activity_subscription"
             android:parentActivityName=".LogInActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -31,26 +31,26 @@
                 android:value="com.example.mkai.pry.LogInActivity" />
         </activity>
         <activity
-            android:name=".ResultActivity"
+            android:name=".result.ResultActivity"
             android:label="@string/title_activity_result"
-            android:parentActivityName=".SubscriptionActivity"
+            android:parentActivityName=".subscription.SubscriptionActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.mkai.pry.SubscriptionActivity" />
+                android:value=".subscription.SubscriptionActivity" />
         </activity>
         <activity
-            android:name=".faceDetect"
+            android:name=".photo.faceDetect"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".SubscriptionActivity"
+            android:parentActivityName=".subscription.SubscriptionActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.mkai.pry.SubscriptionActivity" />
+                android:value=".subscription.SubscriptionActivity" />
         </activity>
     </application>
 
