@@ -103,9 +103,9 @@ public class SubscriptionActivity extends AppCompatActivity {
 
     private String[] getDataSet() {
 
-        String[] mDataSet = new String[100];
-        for (int i = 0; i < 100; i++) {
-            mDataSet[i] = "item" + i;
+        String[] mDataSet = new String[30];
+        for (int i = 0; i < 30; i++) {
+            mDataSet[i] = "Подписка " + i;
         }
         return mDataSet;
     }

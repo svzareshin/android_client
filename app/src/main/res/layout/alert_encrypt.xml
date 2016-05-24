@@ -30,7 +30,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ГОСТ"
+            android:text="RSA"
             android:id="@+id/radioButton"
             android:layout_margin="5dp"
             android:layout_gravity="left"

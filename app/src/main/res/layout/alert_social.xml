@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="Социальная сеть"
+        android:text="Источник данных"
         android:textAppearance="?android:attr/textAppearanceLarge">
     </TextView>
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -30,7 +30,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Facebook"
+            android:text="База данных Pry"
             android:id="@+id/radioButton"
             android:layout_margin="5dp"
             android:layout_gravity="left"
