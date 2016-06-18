@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
@@ -94,9 +95,11 @@ public class ResultAdapter extends BaseAdapter {
                     ivPhoto.post(new Runnable() {
                         @Override
                         public void run() {
-                            ivPhoto.setMaxWidth(30);
-                            ivPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            ivPhoto.setMaxWidth(100);
+                            ivPhoto.setScaleType(ImageView.ScaleType.FIT_XY);
                             ivPhoto.setImageBitmap(bitmap);
+                            ivPhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+                            ivPhoto.setMaxWidth(100);
                         }
                     });
                 } catch (IOException e) {
