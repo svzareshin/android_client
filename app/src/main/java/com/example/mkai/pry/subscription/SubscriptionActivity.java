@@ -1,10 +1,14 @@
 package com.example.mkai.pry.subscription;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,11 +23,15 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.mkai.pry.R;
+import com.example.mkai.pry.aleksey2093.GetFriendsLastResult;
+import com.example.mkai.pry.aleksey2093.ListenResultFromServer;
+import com.example.mkai.pry.aleksey2093.RequestFriendsList;
 import com.example.mkai.pry.photo.faceDetect;
 import com.example.mkai.pry.result.ResultActivity;
 import com.example.mkai.pry.settings.SettingsActivity;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class SubscriptionActivity extends AppCompatActivity {
@@ -36,7 +44,6 @@ public class SubscriptionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String[] myDataset = getDataSet();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -45,11 +52,18 @@ public class SubscriptionActivity extends AppCompatActivity {
 
         final ListView subsListView = (ListView) findViewById(R.id.subsListView);
         // обрабатывает нажатие на пункт списка
+        assert subsListView != null;
         subsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 //                Log.d(LOG_TAG, subsListView.getItemAtPosition(position).toString() + " itemClick: position = " + position + ", id = "
 //                        + id);
+                String login = subsListView.getItemAtPosition(position).toString();
+                GetFriendsLastResult getResult = new GetFriendsLastResult(SubscriptionActivity.this);
+                SharedPreferences shared = getSharedPreferences("friendClick", MODE_PRIVATE);
+                SharedPreferences.Editor editor = shared.edit();
+                editor.putString("name",login);
+                editor.apply();
                 Intent intent = new Intent(SubscriptionActivity.this, ResultActivity.class);
                 startActivity(intent);
             }
@@ -60,16 +74,19 @@ public class SubscriptionActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = "
-                  + id);
+                        + id);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d(LOG_TAG, "itemSelect: nothing");
             }
         });
+        /*String[] myDataset = getDataSet();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.sub_item, myDataset);
-        subsListView.setAdapter(adapter);
+        /subsListView.setAdapter(adapter);*/
+        loadFriendList();
+        startListenClass();
     }
 
     @Override
@@ -99,8 +116,58 @@ public class SubscriptionActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * выводит полученный от метода загрузки подписок на экран
+     */
+    private android.os.Handler updateListHandler = new android.os.Handler()
+    {
+        @Override
+       public void handleMessage(Message msg)
+       {
+           Bundle bundle = msg.getData();
+           ArrayList<String> friends = bundle.getStringArrayList("list");
+           final ListView subsListView = (ListView) findViewById(R.id.subsListView);
+           assert subsListView != null;
+           assert friends != null;
+           ArrayAdapter<String> adapter = new ArrayAdapter<String>(subsListView.getContext(),
+                   R.layout.sub_item, friends);
+           subsListView.setAdapter(adapter);
+       }
+    };
 
+    /**
+     * загружает список подписок и передает информацию в поток UI
+     */
+    private void loadFriendList()
+    {
+        final RequestFriendsList requestFriendsList = new RequestFriendsList(this);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<String> list = requestFriendsList.getListFriends();
+                Message msg = updateListHandler.obtainMessage();
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("list",list);
+                msg.setData(bundle);
+                updateListHandler.sendMessage(msg);
+            }
+        });
+        thread.setName("Download friends list");
+        thread.start();
+    }
 
+    /**
+     * Запускает класс прослушки
+     */
+    private void startListenClass() {
+        ListenResultFromServer listen = new ListenResultFromServer(this);
+        listen.startListenThread();
+    }
+
+    /**
+     * Использовать, если нет подключения к интернету
+     * @return массив тестовых подписок
+     */
     private String[] getDataSet() {
 
         String[] mDataSet = new String[30];

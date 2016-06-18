@@ -1,25 +1,24 @@
-package com.example.mkai.pry;
+package com.example.mkai.pry.suh;
 
-import aleksey2093.GiveMeSettings;
+import android.graphics.Bitmap;
+import android.util.Log;
+
+import com.example.mkai.pry.aleksey2093.GiveMeSettings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.FacebookClient.AccessToken;
-import com.restfb.exception.FacebookGraphException;
-import com.restfb.types.User;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.CyclicBarrier;
-import javafx.scene.image.Image;
-
-import android.util.Log;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Created by Suharev on 20.03.2016.
@@ -29,7 +28,7 @@ import android.util.Log;
  * И два доп. метода для работы с vk (проверяют результаты)
  */
 
-public class getSocNetData {
+public class GetSomePrivateData {
 
     String urlParameters;
     URL url;
@@ -106,8 +105,9 @@ public class getSocNetData {
     {
         //Получение настроек вывода из модуля настроек текущей подсистемы
         GiveMeSettings giveMeSettings = new GiveMeSettings();
-        byte[] setts = giveMeSettings.getSocialStg();
-        if (setts[0] == -1)
+        boolean sourceData = giveMeSettings.getSourceData();
+        boolean[] setts = giveMeSettings.getInfo();
+        if (setts.length == 1 && !setts[0])
             return null;
         byte cnt=0;
         //String[] gender = {"Не указан", "Женский","Мужской"};//Пригодится, если захотим вывести пол
@@ -179,14 +179,14 @@ public class getSocNetData {
                     for (JsonElement user : pItem) {
                         //Проверка на ошибку в качестве ответа
                         PersonInfo pi = new PersonInfo();
-                        if(setts[1]==1)pi.image=new Image(vkcheckfield(user,"photo_max_orig"));
+                        //if(setts[1]==1)pi.image=new Image(vkcheckfield(user,"photo_max_orig"));
                         //Чтобы не словить NullPointerException проверяем полученные данные на пустоту при помощи метода vkcheckfield
-                        if(setts[1]==1)pi.image=vkcheckfield(user,"photo_max_orig");
-                        if(setts[2]==1){pi.first_name=vkcheckfield(user,"first_name"); pi.last_name=vkcheckfield(user,"last_name");}
-                        if(setts[3]==1)pi.birthday=vkcheckfield(user,"bdate");
-                        if(setts[4]==1){pi.country=vkcheckfield(user,"country","title"); pi.city=vkcheckfield(user,"city","title");}
-                        if(setts[5]==1)pi.occupation=vkcheckfield(user,"occupation","name");
-                        if(setts[6]==1)pi.phone=vkcheckfield(user,"contacts","phone");
+                        if(setts[0])pi.image=vkcheckfield(user,"photo_max_orig");
+                        if(setts[1]){pi.first_name=vkcheckfield(user,"first_name"); pi.last_name=vkcheckfield(user,"last_name");}
+                        if(setts[2])pi.birthday=vkcheckfield(user,"bdate");
+                        if(setts[3]){pi.country=vkcheckfield(user,"country","title"); pi.city=vkcheckfield(user,"city","title");}
+                        if(setts[4])pi.occupation=vkcheckfield(user,"occupation","name");
+                        if(setts[5])pi.phone=vkcheckfield(user,"contacts","phone");
                         pi.link=links.get(cnt);
                         results.add(pi);
                     }

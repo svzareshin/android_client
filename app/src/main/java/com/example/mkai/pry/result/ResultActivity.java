@@ -1,13 +1,18 @@
 package com.example.mkai.pry.result;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.mkai.pry.R;
+import com.example.mkai.pry.aleksey2093.GetFriendsLastResult;
+import com.example.mkai.pry.suh.PersonInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +52,8 @@ public class ResultActivity extends AppCompatActivity {
         });
         */
         results = getResults();
-        ResultAdapter adapter = new ResultAdapter(results, ResultActivity.this);
+        ResultAdapter adapter = new ResultAdapter(results, this, getWidthDisplay());
         resultsListView.setAdapter(adapter);
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,9 +69,52 @@ public class ResultActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Возвращает ширину фотографии
+     * @return ширина
+     */
+    private int getWidthDisplay()
+    {
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics metricsB = new DisplayMetrics();
+        display.getMetrics(metricsB);
+        int width = metricsB.widthPixels * 20; width = width / 100;
+        return width;
+    }
+
+    private ArrayList<PersonInfo> loadResults()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("friendClick",MODE_PRIVATE);
+        final GetFriendsLastResult getFriendsLastResult = new GetFriendsLastResult(this);
+        final String login = sharedPreferences.getString("name","");
+        final ArrayList<PersonInfo> list = new ArrayList<PersonInfo>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (login.length() != 0)
+                {
+                    ArrayList<PersonInfo> tmp = getFriendsLastResult.getPersonInfoArrayListResult(login);
+                    list.addAll(tmp);
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     protected List<PersonDescriptor> getResults() {
-        for(int i=0; i < 21; i++ ) {
+        /*for(int i=0; i < 21; i++ ) {
             results.add(new PersonDescriptor());
+        }*/
+        ArrayList<PersonInfo> list = loadResults();
+        for (PersonInfo personInfo : list) {
+            results.add(new PersonDescriptor(personInfo));
         }
         return results;
     }

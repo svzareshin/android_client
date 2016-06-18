@@ -6,6 +6,8 @@ import android.media.Image;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mkai.pry.suh.PersonInfo;
+
 import java.net.URI;
 
 public class PersonDescriptor {
@@ -24,6 +26,14 @@ public class PersonDescriptor {
         name = new String("Вася Пупкин");
         birthday = new String("13 марта");
         city = new String("Москва");
+    }
+
+    public PersonDescriptor(PersonInfo personInfo)
+    {
+        photo = personInfo.image;
+        name = personInfo.first_name + " " + personInfo.last_name;
+        birthday = personInfo.birthday;
+        city = personInfo.city;
     }
 
     public String getName() {
