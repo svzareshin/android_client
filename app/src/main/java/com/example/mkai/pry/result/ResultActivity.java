@@ -1,13 +1,17 @@
 package com.example.mkai.pry.result;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.mkai.pry.R;
@@ -28,16 +32,16 @@ public class ResultActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final ListView resultsListView = (ListView) findViewById(R.id.resultsListView);
+        //final ListView resultsListView = (ListView) findViewById(R.id.resultsListView);
         // обрабатывает нажатие на пункт списка
-    /*    subsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*subsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Log.d(LOG_TAG, " itemClick: position = " + position + ", id = "
                         + id);
             }
-        });
-
+        });*/
+/*
         //обрабатывает выделение пунктов списка (
         subsListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -51,9 +55,10 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
         */
-        results = getResults();
+        /*results = getResults();
         ResultAdapter adapter = new ResultAdapter(results, this, getWidthDisplay());
-        resultsListView.setAdapter(adapter);
+        resultsListView.setAdapter(adapter);*/
+        updateListResult(this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,6 +73,37 @@ public class ResultActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateListResult(final Context context)
+    {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                results = getResults();
+                final ListView resultsListView = (ListView) findViewById(R.id.resultsListView);
+                final ResultAdapter adapter = new ResultAdapter(results, context, getWidthDisplay());
+                assert resultsListView != null;
+                resultsListView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        resultsListView.setAdapter(adapter);
+                    }
+                });
+            }
+        });
+        thread.setName("Thread update open Result");
+        thread.start();
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab: {
+                final Context context = v.getContext();
+                updateListResult(context);
+            }
+            break;
+        }
     }
 
     /**
@@ -112,11 +148,11 @@ public class ResultActivity extends AppCompatActivity {
         /*for(int i=0; i < 21; i++ ) {
             results.add(new PersonDescriptor());
         }*/
+        results.clear();
         ArrayList<PersonInfo> list = loadResults();
         for (PersonInfo personInfo : list) {
             results.add(new PersonDescriptor(personInfo));
         }
         return results;
     }
-
 }

@@ -23,8 +23,8 @@ public class GiveMeSettings {
 
     /**
      * Первоначальное создание файла настроек с установлением контекста и параметров
-     * @param context - контекст
-     * @param preferences - параметры
+     * @param context  контекст
+     * @param preferences  параметры
      */
     public GiveMeSettings(Context context, SharedPreferences preferences) {
         GiveMeSettings.context = context;

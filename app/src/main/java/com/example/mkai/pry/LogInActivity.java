@@ -91,10 +91,7 @@ public class LogInActivity extends Activity implements OnClickListener {
         final String login = ((EditText) this.findViewById(R.id.input_login)).getText().toString();
         final String password = ((EditText) this.findViewById(R.id.input_password)).getText().toString();
         CheckBox checkBox = (CheckBox) this.findViewById(R.id.checkBox);
-        if (checkBox.isChecked()) {
+        if (checkBox.isChecked())
             new GiveMeSettings().setLpkString(login, password);
-        } else {
-            new GiveMeSettings().setLpkString("", "");
-        }
     }
 }
