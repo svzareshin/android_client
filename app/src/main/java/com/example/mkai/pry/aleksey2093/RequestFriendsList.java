@@ -73,8 +73,11 @@ public class RequestFriendsList {
                 msg = new byte[inputStream.available()];
                 len = inputStream.read(msg);
             }
-            //дешифруем
-            if (msg[1] == (byte) 101) {
+            msg = giveMeSettings.getDecryptMsg(msg); //дешифруем
+            if (msg[0] == (byte)-1) {
+                System.out.println("Сообщение дешифровано неверно");
+                return false;
+            } else if (msg[1] == (byte) 101) {
                 showDialogInformation("Ошибка авторизации", "Неправильный логин или пароль");
                 return false;
             } else if (msg[1] != (byte) 1) {
@@ -98,7 +101,7 @@ public class RequestFriendsList {
      * @return true в случае успеха
      */
     private boolean formationListFriends(byte[] msg, int len) {
-        int j = 2;
+        int j = 3;
         if (len <= j) {
             System.out.println("Подписчиков нет");
             return false;
@@ -110,16 +113,16 @@ public class RequestFriendsList {
             * на сервер, а не строковый логин */
             int key = java.nio.ByteBuffer.wrap(msg, j, 4).getInt();
             j += 4;
-            int lenlogin = msg[j];
+            int len_login = msg[j];
             j++;
             try {
-                String tess = new String(msg, j, lenlogin, "UTF-8");
+                String tess = new String(msg, j, len_login, "UTF-8");
                 stringArrayList.add(tess);
             } catch (UnsupportedEncodingException e) {
                 System.out.println("Ошибка обработки имени подписчика");
                 e.printStackTrace();
             }
-            j += lenlogin;
+            j += len_login;
         }
         listfrends = stringArrayList;
         return listfrends.size() != 0;
@@ -156,6 +159,7 @@ public class RequestFriendsList {
             return false;
         }
         try {
+            message_byte = giveMeSettings.getDecryptMsg(message_byte);
             outputStream.write(message_byte);
         } catch (Exception ex) {
             ex.printStackTrace();
