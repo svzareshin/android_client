@@ -101,7 +101,7 @@ public class RequestFriendsList {
      * @return true в случае успеха
      */
     private boolean formationListFriends(byte[] msg, int len) {
-        int j = 3;
+        int j = 2;
         if (len <= j) {
             System.out.println("Подписчиков нет");
             return false;
