@@ -61,7 +61,7 @@ public class GetFriendsLastResult {
             DataInputStream inputStream = new DataInputStream(socket.getInputStream());
             DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
             if (sendRequestToServer(giveMeSettings, outputStream, friend)) {
-                waitServerMsg(inputStream, friend);
+                waitServerMsg(giveMeSettings,inputStream, friend);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -121,6 +121,7 @@ public class GetFriendsLastResult {
             j++;
             for (int i = 0; i < friend.getBytes().length; i++, j++)
                 msg[j] = friend.getBytes()[i];
+            msg = giveMeSettings.getEncryptMsg(msg);
             outputStream.write(msg);
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,7 +136,7 @@ public class GetFriendsLastResult {
      * @param inputStream входной поток
      * @param friend      имя подписчика
      */
-    private void waitServerMsg(DataInputStream inputStream, String friend) {
+    private void waitServerMsg(GiveMeSettings giveMeSettings, DataInputStream inputStream, String friend) {
         byte[] msg = new byte[1];
         int len = 0;
         while (len <= 0) {
@@ -147,8 +148,11 @@ public class GetFriendsLastResult {
                 return;
             }
         }
-        //дешифруем полученное сообщение
-        if (msg[1] == (byte) 103) {
+        msg = giveMeSettings.getDecryptMsg(msg); //дешифруем полученное сообщение
+        if (msg[0] == (byte)-1) {
+            System.out.println("Сообщение дешифровано неверно");
+            return;
+        } else if (msg[1] == (byte) 103) {
             showDialogInform(1, null);
             return;
         } else if (msg[1] != 3) {
@@ -165,10 +169,10 @@ public class GetFriendsLastResult {
      *
      * @param msg   байт массив с сервера
      * @param len   длинна массива
-     * @param login имя текущего пользователя
+     * @param friend имя текущего пользователя
      */
-    public void resultSendPhoto(byte[] msg, int len, String login) {
-        formationListLinks(msg, len, login);
+    public void resultSendPhoto(byte[] msg, int len, String friend) {
+        formationListLinks(msg, len, friend);
     }
 
     /**

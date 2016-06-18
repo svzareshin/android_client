@@ -6,8 +6,13 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Build;
 
+import com.example.mkai.pry.encrypt.AES;
+import com.example.mkai.pry.encrypt.MD5;
+import com.example.mkai.pry.encrypt.RSA;
+
 import java.io.InputStream;
 import java.lang.String;
+import java.nio.ByteBuffer;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -145,7 +150,7 @@ public class GiveMeSettings {
 
     /**
      * Возвращает логин пользователя или пароль
-     * @param b логин (true), пароль (false)
+     * @param what логин (true), пароль (false)
      * @return логин/пароль
      */
     public byte[] getLpk(boolean what) {
@@ -254,5 +259,74 @@ public class GiveMeSettings {
     {
         return preferences.getBoolean("socialnetwork",
                 Boolean.parseBoolean(loadSettingFile().getProperty("socialnetwork")));
+    }
+
+    /**
+     * Шифрование стандратного сообщения
+     * @param msg массив байт сообщения
+     * @return зашифрованный массив
+     */
+    public byte[] getEncryptMsg(byte[] msg) {
+        /*try {
+            byte encrypt_type = msg[0];
+            byte[] tmp = new byte[msg.length-1];
+            System.arraycopy(msg, 1, tmp, 0, tmp.length);
+            int len = "abcabcaabcabcabc".length();
+            switch (encrypt_type) {
+                case 1:
+                    msg = new AES("abcabcaabcabcabc").encrypt(tmp);
+                    break;
+                case 2:
+                    msg = new RSA().encrypt(tmp);
+                    break;
+                case 3:
+                    msg = new MD5().encrypt(tmp);
+                    break;
+                default:
+                    return new byte[] { -1 };
+            }
+            tmp = new byte[msg.length + 1];
+            tmp[0] = encrypt_type;
+            System.arraycopy(msg, 0, tmp, 1, msg.length);
+            return tmp;
+        } catch (Exception ex) {
+            return new byte[] { -1 };
+        }*/
+        return  msg;
+    }
+
+    /**
+     * Дешифрование стандратного сообщения
+     * @param msg массив байт сообщения
+     * @return расщифрованный массив
+     */
+    public byte[] getDecryptMsg(byte[] msg)
+    {
+        /*try {
+            byte bit = msg[0];
+            byte[] tmp = new byte[msg.length-1];
+            System.arraycopy(msg, 1, tmp, 0, tmp.length);
+            switch (bit)
+            {
+                case 1:
+                    msg = new AES("abcabcaabcabcabc").decrypt(tmp);
+                    break;
+                case 2:
+                    msg = new RSA().decrypt(tmp);
+                    break;
+                case 3:
+                    msg = new MD5().decrypt(tmp);
+                    break;
+                default:
+                    return new byte[] { -1 };
+            }
+            tmp = new byte[msg.length+1];
+            tmp[0] = bit;
+            System.arraycopy(msg, 0, tmp, 1, bit);
+            return tmp;
+        } catch (Exception ex) {
+            return new byte[] { -1 };
+        }*/
+        return msg;
     }
 }

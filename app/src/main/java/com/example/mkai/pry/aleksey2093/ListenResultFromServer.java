@@ -83,7 +83,7 @@ public class ListenResultFromServer {
         while (true) {
             try {
                 Socket socket = serversocket.accept();
-                startSocketNewAccept(socket);
+                startSocketNewAccept(giveMeSettings,socket);
             } catch (IOException e) {
                 e.printStackTrace();
                 try {
@@ -131,9 +131,10 @@ public class ListenResultFromServer {
 
     /**
      * Получение входящего сообщения
+     * @param giveMeSettings указатель на класс настроек
      * @param socket указатель на сокет
      */
-    private boolean startSocketNewAccept(Socket socket) {
+    private boolean startSocketNewAccept(GiveMeSettings giveMeSettings, Socket socket) {
         try {
             DataInputStream inputStream = new DataInputStream(socket.getInputStream());
             int len = 0, err = 0;
@@ -145,7 +146,7 @@ public class ListenResultFromServer {
                 if (err > 100000)
                     return false;
             }
-            msgPostsProcessing(msg, len);
+            msgPostsProcessing(giveMeSettings,msg, len);
             return true;
         } catch (Exception ex) {
             return false;
@@ -215,13 +216,16 @@ public class ListenResultFromServer {
 
     /**
      * Обработка входящего сообщения. Проверка на ошибки и передача на извлечение массива ссылок
+     * @param giveMeSettings указатель на класс настроек
      * @param msg входящее сообщние
      * @param len длинна сообщения
      */
-    private void msgPostsProcessing(byte[] msg, int len)
+    private void msgPostsProcessing(GiveMeSettings giveMeSettings, byte[] msg, int len)
     {
-        //дешифруем
-        if (msg[1] == (byte)102) {
+        msg = giveMeSettings.getDecryptMsg(msg);//дешифруем
+        if (msg[0] == (byte)-1) {
+            System.out.println("Сообщение дешифровано неверно");
+        } else if (msg[1] == (byte)102) {
             System.out.println("Неправильный логин или пароль. Тип: " + msg[1]);
             getResDialogWindow(3,null,null,-1);
         } else if (msg[1] != 2) {
