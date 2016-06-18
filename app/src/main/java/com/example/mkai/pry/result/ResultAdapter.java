@@ -91,15 +91,11 @@ public class ResultAdapter extends BaseAdapter {
             public void run() {
                 try {
                     final URL url = new URL(photo);
-                    final Bitmap bitmap = BitmapFactory.decodeStream(url.openStream());
+                    final Bitmap bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeStream(url.openStream()),300,300,false);
                     ivPhoto.post(new Runnable() {
                         @Override
                         public void run() {
-                            ivPhoto.setMaxWidth(100);
-                            ivPhoto.setScaleType(ImageView.ScaleType.FIT_XY);
                             ivPhoto.setImageBitmap(bitmap);
-                            ivPhoto.setScaleType(ImageView.ScaleType.FIT_XY);
-                            ivPhoto.setMaxWidth(100);
                         }
                     });
                 } catch (IOException e) {
