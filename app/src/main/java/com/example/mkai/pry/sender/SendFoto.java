@@ -108,6 +108,7 @@ public class SendFoto extends AsyncTask {
 //            }
 //        }
 //        else return false;
+        msgauth = new byte[msg.length + 1];
         System.arraycopy(msg, 0, msgauth, 1, msg.length);
         return true;
     }
@@ -158,8 +159,9 @@ public class SendFoto extends AsyncTask {
 //            }
 //        }
 //        else return false;
+        msgfoto = new byte[tmp.length + 5];
         System.arraycopy(invert(ByteBuffer.allocate(4).putInt(tmp.length).array()),0,msgfoto,1,4);
-        System.arraycopy(tmp, 0, msgfoto, 1, tmp.length);
+        System.arraycopy(tmp, 0, msgfoto, 5, tmp.length);
         return true;
     }
 
