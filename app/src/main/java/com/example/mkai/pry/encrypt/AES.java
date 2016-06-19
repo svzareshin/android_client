@@ -22,7 +22,7 @@ public class AES implements ICrypto {
     }
 
     public byte[] encrypt(byte[] plainText) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");//NoPadding");
         SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
         cipher.init(Cipher.ENCRYPT_MODE, key,new IvParameterSpec(IV.getBytes("UTF-8")));
         return cipher.doFinal(plainText);

@@ -12,8 +12,11 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.mkai.pry.sender.SendFoto;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.*;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by Антон on 05.04.2016.
@@ -124,7 +127,17 @@ public class FaceOverlayView extends ImageView {
                 {
                     // Здесь мы получаем итоговое изображение и передаём туда, куда нам нужно
                     // пока загружаем в наш же контрол, далее творим что хотим)
-                    this.setBitmap(getRectBitmap((int)face.getPosition().x, (int)face.getPosition().y, (int)face.getWidth() , (int)face.getHeight()));
+//                    this.setBitmap(getRectBitmap((int)face.getPosition().x, (int)face.getPosition().y, (int)face.getWidth() , (int)face.getHeight()));
+                    Bitmap bmp = getRectBitmap((int) face.getPosition().x,
+                            (int) face.getPosition().y,
+                            (int) face.getWidth(),
+                            (int) face.getHeight());
+                    SendFoto send = new SendFoto();
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.JPEG,100,out);
+                    byte[] array = out.toByteArray();
+                    send.sendfoto(array);
+                    send.execute();
                 }
                 chFace = i;
                 flagPic = true;
