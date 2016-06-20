@@ -3,8 +3,10 @@ package com.example.mkai.pry.sender;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Gravity;
 
 import com.example.mkai.pry.aleksey2093.GiveMeSettings;
+import com.example.mkai.pry.aleksey2093.ShowDialogInfo;
 import com.example.mkai.pry.encrypt.AES;
 import com.example.mkai.pry.encrypt.ICrypto;
 import com.example.mkai.pry.encrypt.RSA;
@@ -21,7 +23,7 @@ public class SendFoto extends AsyncTask {
     private Socket socket;
     private InputStream dis;
     private OutputStream dos;
-    private static String ip = "192.168.1.10";
+    private static String ip = "192.168.1.8";
     private static int port = 11000;
     private byte[] msgrec = new byte[10];
     private byte[] msgauth;
@@ -49,21 +51,32 @@ public class SendFoto extends AsyncTask {
                 write(msgauth);
                 if (socket.isConnected()) {
                     dis.read(msgrec);
+                    System.out.println("сообщение от подсистемы отрправки эталона " + msgrec[0]);
                 }
             } catch (Exception e) {
                 Log.i("AsyncTank", "Cannot create Socket");
                 break;
             }
-            if (msgrec[0] == 1) break; //если прошли идентификацию
+            if (msgrec[0] == 1){
+                break; //если прошли идентификацию
+            }
+            if (msgrec[0] == 0){
+                ShowDialogInfo.showToast("не верный логин пароль",false, Gravity.CENTER);
+                break;
+            }
             try {
                 socket.close();
-                if (k == 5) break;
+                if (k == 5) {
+                    ShowDialogInfo.showToast("не отправилось",false, Gravity.CENTER);
+                    System.out.println("сообщение от подсистемы отрправки эталона " + msgrec[0]);
+                    break;
+                }
                 k++;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        write(msgfoto);
+        if (msgrec[0] == 1) write(msgfoto);
         try {
             socket.close();
         } catch (IOException e) {
@@ -86,7 +99,7 @@ public class SendFoto extends AsyncTask {
         System.arraycopy(l, 0, msg, 4, l.length);
         System.arraycopy(pl, 0, msg, 4 + l.length, 4);
         System.arraycopy(p, 0, msg, 8 + l.length, p.length);
-
+        msg = give.getEncryptMsg(msg);
 //
 //        сервер не может расшифровать, значит поак в открытом виде
 //        byte[] msgE;
@@ -140,6 +153,8 @@ public class SendFoto extends AsyncTask {
             tmp[0] = type;
             tmp[9] = 1;
         }
+        tmp = give.getEncryptMsg(tmp);
+
 //        byte[] msgE;
 //        if (cr == 0) {
 //            crypto = new AES("abcabcaabcabcabc");
@@ -174,7 +189,6 @@ public class SendFoto extends AsyncTask {
     //return - для ошибок
     public int sendfoto(byte[] foto) {
         int cr = give.getEncryption();
-        cr = 0;
         if (!getMsgAuth(cr)) return -1;
         byte[] filtr = give.getFilter();
         if (!getMsgFoto(foto, filtr, cr)) return -1;
