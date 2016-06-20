@@ -49,15 +49,15 @@ public class AlertEncrypt extends DialogFragment implements OnClickListener{
     {
         GiveMeSettings giveMeSettings = new GiveMeSettings();
         switch (giveMeSettings.getEncryption()) {
-            case 1:
+            case 0:
                 RadioButton radioButton1 = (RadioButton) v.findViewById(R.id.radioButton2);
                 radioButton1.setChecked(true);
                 break;
-            case 2:
+            case 1:
                 RadioButton radioButton2 = (RadioButton) v.findViewById(R.id.radioButton);
                 radioButton2.setChecked(true);
                 break;
-            case 3:
+            case 2:
                 RadioButton radioButton3 = (RadioButton) v.findViewById(R.id.radioButton3);
                 radioButton3.setChecked(true);
                 break;
