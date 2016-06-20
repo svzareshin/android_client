@@ -40,6 +40,8 @@ public class SendFoto extends AsyncTask {
 //        ip = give.getServerName(1);
         while (true) {
             try {
+                ip = give.getServerName(1);
+                port = give.getServerPort(1);
                 InetAddress ipAddress = InetAddress.getByName(ip);
                 socket = new Socket(ipAddress, port);
                 dis = socket.getInputStream();
@@ -72,10 +74,13 @@ public class SendFoto extends AsyncTask {
 
     private boolean getMsgAuth(int cr) {
         //готовим массив для аутентификации
-        byte[] ll = invert(ByteBuffer.allocate(4).putInt(give.getLpk(true).length).array());
+        /*Фролов: зачем два раза поряд запрашивать логин чтобы первый раз считать длинну,
+        * а второй раз записать его в массив. Можно было записать в массив l, а потом получить длинну
+        * массива l, а так ты два лишних раза обращаешься в файл настроек через мой класс*/
         byte[] l = give.getLpk(true);
-        byte[] pl = invert(ByteBuffer.allocate(4).putInt(give.getLpk(false).length).array());
+        byte[] ll = invert(ByteBuffer.allocate(4).putInt(l.length).array());
         byte[] p = give.getLpk(false);
+        byte[] pl = invert(ByteBuffer.allocate(4).putInt(p.length).array());
         byte[] msg = new byte[8 + l.length + p.length];
         System.arraycopy(ll, 0, msg, 0, 4);
         System.arraycopy(l, 0, msg, 4, l.length);
