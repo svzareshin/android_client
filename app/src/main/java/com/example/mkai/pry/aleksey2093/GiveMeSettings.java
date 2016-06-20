@@ -213,14 +213,14 @@ public class GiveMeSettings {
         switch (encryption)
         {
             case "AES":
-                editor.putInt("encryption",1);
+                editor.putInt("encryption",0);
                 break;
             case "RSA":
-                editor.putInt("encryption",2);
+                editor.putInt("encryption",1);
                 break;
             case "MD5":
             case "ГОСТ":
-                editor.putInt("encryption",3);
+                editor.putInt("encryption",2);
                 break;
         }
         editor.apply();
